@@ -27,8 +27,21 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
     find_package(ZLIB REQUIRED)
     find_package(MPG123 REQUIRED)
 
-    set(OF_LIBRARY    ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled/lib/linux${ARCH_POSTFIX}/libopenFrameworks.a )
-    set(OF_LIBRARY_D  ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled/lib/linux${ARCH_POSTFIX}/libopenFrameworksDebug.a)
+    find_library( OF_LIBRARY
+                  NAMES openFrameworks
+                  PATHS ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled
+                  PATH_SUFFIXES lib/linux${ARCH_POSTFIX}
+                )
+
+    find_library( OF_LIBRARY_D
+                  NAMES openFrameworksDebug
+                  PATHS ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled
+                  PATH_SUFFIXES lib/linux${ARCH_POSTFIX}
+                )
+
+    if( NOT OF_LIBRARY AND NOT OF_LIBRARY_D )
+        message( FATAL_ERROR "***______ Neither Release or Debug build of openFrameworks was found _____ !! Did you forgot to compile OF ?") 
+    endif()
 
     list(APPEND OF_LIBRARY_DEPENDS    
                                 ${OF_ROOT_DIRECTORY}/libs/glfw/lib/linux${ARCH_POSTFIX}/libglfw3.a

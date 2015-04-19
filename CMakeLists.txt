@@ -25,12 +25,14 @@ cmake_policy(SET CMP0022 NEW)
 ### =============================================================================================================== 
 ### The path to your openFrameworks installation is a prerequisite. 
 ### =============================================================================================================== 
+set( OF_ROOT_DIRECTORY CACHE PATH "Point this path to your openFrameworks root directory" )
+
 if( EXISTS "$ENV{OF_ROOT_DIRECTORY}")
     file(TO_CMAKE_PATH "$ENV{OF_ROOT_DIRECTORY}" OF_ROOT_DIRECTORY)
 endif()
 
 if( NOT OF_ROOT_DIRECTORY )
-    set( OF_ROOT_DIRECTORY CACHE PATH "Point this path to your openFrameworks root directory" )
+    set(OF_ROOT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/openFrameworks")
 endif()
 
 if( NOT EXISTS ${OF_ROOT_DIRECTORY} )
