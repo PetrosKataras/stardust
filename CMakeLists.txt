@@ -60,7 +60,7 @@ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake" 
 
 ### =============================================================================================================== 
 ### Locate global dependencies. These files provide some utilies for finding and including dependencies of stardust.
-### StardustFindOF tries to find and include openFrameworks and its dependencies and defines OF_LIBRARIES and OF_INCLUDE_DIRS.
+### StardustFindOF tries to find and include openFrameworks and its dependencies. 
 ### StardustFindEQ tries to locate EQ config cmake files in order to pull EQ and its dependencies ( Lunchbox, Collage etc. )
 ### Check the individual files for more info on what is happening exactly...
 ### =============================================================================================================== 
