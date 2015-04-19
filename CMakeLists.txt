@@ -23,10 +23,8 @@ project( stardust )
 cmake_policy(SET CMP0022 NEW)
 
 ### =============================================================================================================== 
-### The path to your openFrameworks installation is a prerequisite. 
+### The path to openFrameworks. 
 ### =============================================================================================================== 
-set( OF_ROOT_DIRECTORY CACHE PATH "Point this path to your openFrameworks root directory" )
-
 if( EXISTS "$ENV{OF_ROOT_DIRECTORY}")
     file(TO_CMAKE_PATH "$ENV{OF_ROOT_DIRECTORY}" OF_ROOT_DIRECTORY)
 endif()
@@ -34,6 +32,8 @@ endif()
 if( NOT OF_ROOT_DIRECTORY )
     set(OF_ROOT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libs/openFrameworks")
 endif()
+
+set( OF_ROOT_DIRECTORY "${OF_ROOT_DIRECTORY}" CACHE PATH "Point this path to your openFrameworks root directory" FORCE )
 
 if( NOT EXISTS ${OF_ROOT_DIRECTORY} )
     message(FATAL_ERROR " The OF_ROOT_DIRECTORY path: ${OF_ROOT_DIRECTORY} does not exist! " 
