@@ -1,0 +1,7 @@
+if( NOT TARGET stardust )
+    include(${PROJECT_BINARY_DIR}/stardustTargets.cmake)
+endif()
+
+set(STARDUST_INCLUDE_DIRS ${STARDUST_DEPENDS_INCLUDES} )
+set(STARDUST_LIBRARIES stardust)
+set(STARDUST_FOUND TRUE)
