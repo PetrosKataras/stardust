@@ -13,3 +13,6 @@
 [submodule "libs/equalizer/Pression"]
 	path = libs/equalizer/Pression
 	url = git@github.com:Eyescale/Pression.git
+[submodule "libs/equalizer/Equalizer"]
+	path = libs/equalizer/Equalizer
+	url = git@github.com:PetrosKataras/Equalizer.git
