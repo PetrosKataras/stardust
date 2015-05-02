@@ -5,9 +5,10 @@
 ### =============================================================================================================== 
 ### *Dust
 ### =============================================================================================================== 
-add_library( stardust STATIC stardust/application.cpp
-                             stardust/renderer.cpp
-                             stardust/internal/window.cpp
+add_library( stardust STATIC ${PROJECT_SOURCE_DIR}/src/stardust/application.cpp
+                             ${PROJECT_SOURCE_DIR}/src/stardust/renderer.cpp
+                             ${PROJECT_SOURCE_DIR}/src/stardust/internal/renderer.cpp
+                             ${PROJECT_SOURCE_DIR}/src/stardust/internal/window.cpp
 )
 
 ### =============================================================================================================== 
@@ -17,7 +18,7 @@ target_include_directories( stardust PRIVATE ${OF_INCLUDE_DIRS} ${EQUALIZER_INCL
 target_include_directories( stardust PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> )
 
 ### =============================================================================================================== 
-### Project Properties.                                                                                        
+### Stardust Properties.                                                                                        
 ### =============================================================================================================== 
 set_target_properties( stardust PROPERTIES LINKER_LANGUAGE CXX 
                                 DEBUG_POSTFIX "_D"

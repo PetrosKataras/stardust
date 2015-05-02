@@ -1,157 +1,73 @@
-/*
- * Stardust
- * ========
- *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- * - Neither the name of Stardust nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- *
- * Equalizer:
- * ==========
- *
- * Copyright (c) 2011-2014, Stefan Eilemann <eile@eyescale.ch>
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- * - Neither the name of Eyescale Software GmbH nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * openFrameworks is released under the terms of the MIT licence.
- * ==============================================================
- *
- */
 #include <renderer.h>
-#include <eq/client/window.h>
-#include <internal/window.h>
+#include <application.h>
+#include <internal/renderer.h>
 
 namespace stardust
 {
 
-bool Renderer::exit()
+Renderer::Renderer()
+    : _internalRenderer(0)
 {
-    return seq::Renderer::exit();
+}
+
+void Renderer::applyRenderContext()
+{
+    _internalRenderer->applyRenderContext();
+}
+
+void Renderer::setNearFar( const float nearPlane, const float farPlane )
+{
+    _internalRenderer->setNearFar( nearPlane, farPlane );
 }
 
 void Renderer::enableScreenFrustum()
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    applyScreenFrustum();
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    _internalRenderer->enableScreenFrustum();
+}
+
+void Renderer::enablePerspectiveFrustum()
+{
+    _internalRenderer->enablePerspectiveFrustum();
+}
+
+void Renderer::setImplementation( internal::Renderer* internalRenderer )
+{
+    _internalRenderer = internalRenderer;
+}
+
+Application& Renderer::getApplication()
+{
+    _internalRenderer->getApplication();
+}
+
+const Application& Renderer::getApplication() const
+{
+    _internalRenderer->getApplication();
 }
 
 int Renderer::getCurrentWindowWidth()
 {
-   windows_iterator = windows.find( getCurrentWindow() );
-   if( windows_iterator != windows.end() ){
-        return windows_iterator->second->getWidth();
-   }
-   return -1;
+    _internalRenderer->getCurrentWindowWidth();
 }
 
 int Renderer::getCurrentWindowHeight()
 {
-    windows_iterator = windows.find( getCurrentWindow() );
-    if( windows_iterator != windows.end() ){
-        return windows_iterator->second->getHeight();
-    }
-    return -1;
+    return _internalRenderer->getCurrentWindowHeight();
 }
 
 ofPoint Renderer::getCurrentWindowPosition()
 {
-    windows_iterator = windows.find( getCurrentWindow() );
-    if( windows_iterator != windows.end() ){
-        return windows_iterator->second->getWindowPosition();
-    }
-    return ofPoint(-1,-1);
+    return _internalRenderer->getCurrentWindowPosition();
 }
 
 ofPoint Renderer::getCurrentWindowSize()
 {
-    windows_iterator = windows.find( getCurrentWindow() );
-    if( windows_iterator != windows.end() ){
-        return windows_iterator->second->getWindowSize();
-    }
-    return ofPoint(-1,-1);
+    return _internalRenderer->getCurrentWindowSize();
 }
 
 ofRectangle Renderer::getCurrentPixelViewport()
 {
-    windows_iterator = windows.find( getCurrentWindow() );
-    if( windows_iterator != windows.end() ){
-        return windows_iterator->second->getPixelViewport();
-    }
-    return ofRectangle();
-}
-
-shared_ptr<ofBaseRenderer> Renderer::ofRenderer()
-{
-    windows_iterator = windows.find( getCurrentWindow() );
-    if( windows_iterator != windows.end() ){
-        return windows_iterator->second->renderer();
-    }
-    LBERROR << "Stardust::Renderer::ofRenderer() ---> Something is seriously wrong -- Stardust could not find an OF renderer for window " << getCurrentWindow() << std::endl;
-}
-
-void Renderer::notifyWindowInitGL( eq::Window* window )
-{
-    windows[ window ] =  new internal::Window( window );
-    windows[ window ]->initialiaze();
-}
-
-void Renderer::notifyWindowExitGL( eq::Window* window )
-{
-    ///> TODO: Clear windows map.......
-
-}
-
-void Renderer::processWindowEvent( eq::Window* window, const eq::Event& event )
-{
-    ///> forward moused/keyboard events...
+    return _internalRenderer->getCurrentPixelViewport();
 }
 
 }

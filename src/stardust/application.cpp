@@ -63,6 +63,7 @@
  *
  */
 #include <application.h>
+#include <internal/renderer.h>
 #include <renderer.h>
 
 
@@ -88,7 +89,7 @@ bool Application::exit()
 
 seq::Renderer* Application::createRenderer()
 {
-    return new stardust::Renderer( *this );
+    return new internal::Renderer( *this );
 }
 
 co::Object* Application::createObject( const uint32_t type )

@@ -58,75 +58,142 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *
  * openFrameworks is released under the terms of the MIT licence.
  * ==============================================================
  *
  */
-#pragma once
-
+#include <internal/renderer.h>
 #include <eq/client/window.h>
-#include <ofAppBaseWindow.h>
-#include <ofBaseTypes.h>
+#include <internal/window.h>
+#include <renderer.h>
 
 namespace stardust
 {
-    namespace internal
-    {
-        class Window  : public ofAppBaseGLWindow
-        {
-        
-        public:
+namespace internal
+{
 
-            Window( eq::Window* window );
-            virtual ~Window();
+bool Renderer::init( co::Object* initData )
+{
+    _initData = initData;
+    return seq::Renderer::init(initData);
+}
 
-            static void loop(){};
-            static bool doesLoop(){ return false; }
-            static bool allowsMultiWindow(){ return true; }
-            static bool needsPolling(){ return false; }
-            static void pollEvents(){ }
+void Renderer::draw( co::Object* frameData )
+{
+   if( _userRenderer )
+       _userRenderer->draw( frameData );
+}
 
+bool Renderer::exit()
+{
+    if( _userRenderer )
+        _userRenderer->exit();
 
-            void initialiaze();
+    return seq::Renderer::exit();
+}
 
-            virtual void setup(const ofGLWindowSettings & settings){};
-            virtual void update(){}
-            virtual void draw(){}
+void Renderer::enableScreenFrustum()
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    applyScreenFrustum();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
 
-            virtual shared_ptr<ofBaseRenderer> & renderer(){ return currentRenderer; }
+void Renderer::enablePerspectiveFrustum()
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    applyPerspectiveFrustum();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+int Renderer::getCurrentWindowWidth()
+{
+   windows_iterator = _windows.find( getCurrentWindow() );
+   if( windows_iterator != _windows.end() ){
+        return windows_iterator->second->getWidth();
+   }
+   return -1;
+}
 
-            virtual ofPoint getWindowPosition(); 
-            virtual ofPoint getWindowSize();
-
-            ofRectangle getPixelViewport();
-
-            virtual int getWidth();
-            virtual int	getHeight();
-
-            virtual void * getWindowContext(){return NULL;};
-            virtual ofCoreEvents & events(){ return coreEvents; }
-        protected:
-
-
-            const   eq::Channels& getEqChannels() const;
-
-            const   eq::PixelViewport& getEqPixelViewport() const;
-            const   eq::Viewport& getEqViewport() const;
-
-            void    setEqPixelViewport( const eq::PixelViewport& pvp );
-            void    setEqViewport( const eq::Viewport& vp );
-
-        private:
-            eq::Window* eqWindow;
-            shared_ptr<ofBaseRenderer>  currentRenderer;
-            ofCoreEvents coreEvents;
-
-            ofPoint windowPos;
-            ofPoint windowSize;
-
-            int width;
-            int height;
-        };
+int Renderer::getCurrentWindowHeight()
+{
+    windows_iterator = _windows.find( getCurrentWindow() );
+    if( windows_iterator != _windows.end() ){
+        return windows_iterator->second->getHeight();
     }
+    return -1;
+}
+
+ofPoint Renderer::getCurrentWindowPosition()
+{
+    windows_iterator = _windows.find( getCurrentWindow() );
+    if( windows_iterator != _windows.end() ){
+        return windows_iterator->second->getWindowPosition();
+    }
+    return ofPoint(-1,-1);
+}
+
+ofPoint Renderer::getCurrentWindowSize()
+{
+    windows_iterator = _windows.find( getCurrentWindow() );
+    if( windows_iterator != _windows.end() ){
+        return windows_iterator->second->getWindowSize();
+    }
+    return ofPoint(-1,-1);
+}
+
+ofRectangle Renderer::getCurrentPixelViewport()
+{
+    windows_iterator = _windows.find( getCurrentWindow() );
+    if( windows_iterator != _windows.end() ){
+        return windows_iterator->second->getPixelViewport();
+    }
+    return ofRectangle();
+}
+
+shared_ptr<ofBaseRenderer> Renderer::ofRenderer()
+{
+    windows_iterator = _windows.find( getCurrentWindow() );
+    if( windows_iterator != _windows.end() ){
+        return windows_iterator->second->renderer();
+    }
+    LBERROR << "Stardust::Renderer::ofRenderer() ---> Something is seriously wrong -- Stardust could not find an OF renderer for window " << getCurrentWindow() << "____Prepare to FAIL____" << std::endl;
+}
+
+void Renderer::notifyWindowInitGL( eq::Window* eqWindow )
+{
+    _windows[ eqWindow ] =  shared_ptr<internal::Window>( new internal::Window( eqWindow ) );
+    _windows[ eqWindow ]->initialiaze();
+
+    ofGetMainLoop()->addWindow( _windows[ eqWindow ] );
+    ///> TODO: Loop through windows.
+    ofGetMainLoop()->setCurrentWindow( _windows[ eqWindow ] );
+
+    if( _userRenderer ) return;
+
+    _userRenderer = static_cast<stardust::Application&>(getApplication()).createStardustRenderer();
+
+    if( _userRenderer )
+    {
+        _userRenderer->setImplementation(this);
+        _userRenderer->init( _initData );
+    }
+
+}
+
+void Renderer::notifyWindowExitGL( eq::Window* eqWindow )
+{
+    ///> TODO: Clear windows map.......
+
+}
+
+void Renderer::processWindowEvent( eq::Window* eqWindow, const eq::Event& event )
+{
+    ///> forward moused/keyboard events...
+}
+
+}
 }

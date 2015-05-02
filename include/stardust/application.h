@@ -71,6 +71,8 @@
 namespace stardust
 {
 
+class Renderer;
+
 class Application : public seq::Application
 {
 
@@ -80,10 +82,13 @@ public:
     virtual bool init( const int argc, char** argv, co::Object* initData );
     virtual bool exit();
 
-    virtual seq::Renderer* createRenderer();
+    virtual seq::Renderer* createRenderer() final;
+    virtual shared_ptr<stardust::Renderer>  createStardustRenderer() = 0;
+
     virtual co::Object* createObject( const uint32_t type );
 
 protected:
+
     virtual ~Application() {}
 
 private:

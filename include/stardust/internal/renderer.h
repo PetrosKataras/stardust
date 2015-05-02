@@ -58,75 +58,63 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *
  * openFrameworks is released under the terms of the MIT licence.
  * ==============================================================
  *
  */
 #pragma once
 
-#include <eq/client/window.h>
-#include <ofAppBaseWindow.h>
-#include <ofBaseTypes.h>
+#include <seq/sequel.h>
+#include "application.h"
 
 namespace stardust
 {
-    namespace internal
-    {
-        class Window  : public ofAppBaseGLWindow
-        {
-        
-        public:
 
-            Window( eq::Window* window );
-            virtual ~Window();
+class Renderer;
 
-            static void loop(){};
-            static bool doesLoop(){ return false; }
-            static bool allowsMultiWindow(){ return true; }
-            static bool needsPolling(){ return false; }
-            static void pollEvents(){ }
+namespace internal
+{
+class Window;
 
+class Renderer : public seq::Renderer
+{
 
-            void initialiaze();
+public:
+    Renderer( stardust::Application& app ) : seq::Renderer( app ) {}
+    virtual ~Renderer() {}
 
-            virtual void setup(const ofGLWindowSettings & settings){};
-            virtual void update(){}
-            virtual void draw(){}
+    int getCurrentWindowWidth();
+    int getCurrentWindowHeight();
 
-            virtual shared_ptr<ofBaseRenderer> & renderer(){ return currentRenderer; }
+    ofPoint getCurrentWindowPosition();
+    ofPoint getCurrentWindowSize();
 
-            virtual ofPoint getWindowPosition(); 
-            virtual ofPoint getWindowSize();
+    ofRectangle getCurrentPixelViewport();
 
-            ofRectangle getPixelViewport();
+    void enableScreenFrustum();
+    void enablePerspectiveFrustum();
 
-            virtual int getWidth();
-            virtual int	getHeight();
+protected:
+    virtual bool init( co::Object* initData );
+    virtual bool exit();
 
-            virtual void * getWindowContext(){return NULL;};
-            virtual ofCoreEvents & events(){ return coreEvents; }
-        protected:
+    virtual void draw( co::Object* frameData );
 
+    virtual void notifyWindowInitGL( eq::Window* eqWindow );
+    virtual void notifyWindowExitGL( eq::Window* eqWindow );
 
-            const   eq::Channels& getEqChannels() const;
+    virtual void processWindowEvent( eq::Window* eqWindow, const eq::Event& event );
 
-            const   eq::PixelViewport& getEqPixelViewport() const;
-            const   eq::Viewport& getEqViewport() const;
+    std::shared_ptr<ofBaseRenderer>  ofRenderer();
 
-            void    setEqPixelViewport( const eq::PixelViewport& pvp );
-            void    setEqViewport( const eq::Viewport& vp );
+private:
 
-        private:
-            eq::Window* eqWindow;
-            shared_ptr<ofBaseRenderer>  currentRenderer;
-            ofCoreEvents coreEvents;
-
-            ofPoint windowPos;
-            ofPoint windowSize;
-
-            int width;
-            int height;
-        };
-    }
+    std::map<const eq::Window*, shared_ptr<internal::Window> > _windows;
+    std::map<const eq::Window*, shared_ptr<internal::Window> >::iterator windows_iterator; 
+    shared_ptr<stardust::Renderer> _userRenderer;
+    co::Object* _initData;
+};
 }
+}
+
+
