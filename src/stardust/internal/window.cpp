@@ -73,6 +73,7 @@ namespace internal
 
 Window::Window( eq::Window* window )
     : eqWindow( window )
+    , _buttonPressed(false)
 {
 }
 
@@ -118,6 +119,7 @@ void Window::initialiaze()
 {
     currentRenderer = shared_ptr<ofBaseRenderer>( new ofGLRenderer(this) );
     static_cast<ofGLRenderer*>(currentRenderer.get())->setup();
+    static_cast<ofGLRenderer*>(currentRenderer.get())->setOrientation( OF_ORIENTATION_DEFAULT, false );
 }
 
 ofPoint Window::getWindowPosition()

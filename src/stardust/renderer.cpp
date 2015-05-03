@@ -10,6 +10,16 @@ Renderer::Renderer()
 {
 }
 
+ofCoreEvents& Renderer::events()
+{
+    return _internalRenderer->events();
+}
+
+shared_ptr<ofBaseRenderer> Renderer::ofRenderer()
+{
+    return _internalRenderer->ofRenderer();
+}
+
 void Renderer::applyRenderContext()
 {
     _internalRenderer->applyRenderContext();

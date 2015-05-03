@@ -94,6 +94,9 @@ public:
     void enableScreenFrustum();
     void enablePerspectiveFrustum();
 
+    ofCoreEvents& events();
+
+    std::shared_ptr<ofBaseRenderer>  ofRenderer();
 protected:
     virtual bool init( co::Object* initData );
     virtual bool exit();
@@ -105,7 +108,6 @@ protected:
 
     virtual void processWindowEvent( eq::Window* eqWindow, const eq::Event& event );
 
-    std::shared_ptr<ofBaseRenderer>  ofRenderer();
 
 private:
 

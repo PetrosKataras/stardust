@@ -106,6 +106,9 @@ namespace stardust
 
             virtual void * getWindowContext(){return NULL;};
             virtual ofCoreEvents & events(){ return coreEvents; }
+
+            bool _buttonPressed;
+            int _buttonInUse;
         protected:
 
 

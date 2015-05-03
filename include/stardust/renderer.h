@@ -22,6 +22,7 @@ friend internal::Renderer;
         Renderer();
 
         virtual void init( co::Object* initData ){};
+        virtual void update(){};
         virtual void draw( co::Object* frameData ) = 0;
         virtual void exit(){};
 
@@ -30,6 +31,8 @@ friend internal::Renderer;
         void enableScreenFrustum();
         void enablePerspectiveFrustum();
 
+        shared_ptr<ofBaseRenderer> ofRenderer();
+        ofCoreEvents& events();
 
     protected:
         ///> The internal renderer should already be set when these functions become available. 
