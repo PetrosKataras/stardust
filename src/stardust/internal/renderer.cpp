@@ -82,8 +82,14 @@ void Renderer::draw( co::Object* frameData )
 {
     if( _userRenderer )
     {
-        events().notifyUpdate();
+        /// update events
+        windows_iterator = _windows.find( getCurrentWindow() );
+        if( windows_iterator != _windows.end() ){
+            windows_iterator->second->events().notifyUpdate();
+        }
+        ///> update callback
         _userRenderer->update();
+        ///> draw callback
         _userRenderer->draw( frameData );
     }
 }
@@ -206,52 +212,67 @@ void Renderer::processWindowEvent( eq::Window* eqWindow, const eq::Event& event 
     windows_iterator = _windows.find( getCurrentWindow() );
     if( windows_iterator != _windows.end() )
     {
-        ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
         switch(event.type)
         {
             case eq::Event::WINDOW_POINTER_BUTTON_PRESS:
             {
-                const eq::PointerEvent& releaseEvent =
-                    event.pointerButtonRelease;
+                ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
+                const eq::PointerEvent& pressEvent = event.pointerButtonPress;
                 int button = 0;
-                if( releaseEvent.buttons == eq::PTR_BUTTON_NONE)
+                switch( pressEvent.button )
                 {
-                    if( releaseEvent.button == eq::PTR_BUTTON1 )
+                    case eq::PTR_BUTTON1:
                     {
                         button = OF_MOUSE_BUTTON_LEFT;
+                        break;
                     }
-                    if( releaseEvent.button == eq::PTR_BUTTON2 )
+                    case eq::PTR_BUTTON2:
+                    {
+                        button = OF_MOUSE_BUTTON_MIDDLE;
+                        break;
+                    }
+                    case eq::PTR_BUTTON3:
                     {
                         button = OF_MOUSE_BUTTON_RIGHT;
+                        break;
                     }
                 }
                 windows_iterator->second->_buttonPressed = true;
-                windows_iterator->second->events().notifyMousePressed(windows_iterator->second->events().getMouseX(), windows_iterator->second->events().getMouseY(), button);
+                windows_iterator->second->_buttonInUse = button;
+                windows_iterator->second->events().notifyMousePressed( pressEvent.x, pressEvent.y, button );
                 break;
             }
             case eq::Event::WINDOW_POINTER_BUTTON_RELEASE:
             {
-                const eq::PointerEvent& releaseEvent =
-                    event.pointerButtonRelease;
+                ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
+                const eq::PointerEvent& releaseEvent = event.pointerButtonRelease;
                 int button = 0;
-                if( releaseEvent.buttons == eq::PTR_BUTTON_NONE)
+                switch( releaseEvent.button )
                 {
-                    if( releaseEvent.button == eq::PTR_BUTTON1 )
+                    case eq::PTR_BUTTON1:
                     {
                         button = OF_MOUSE_BUTTON_LEFT;
+                        break;
                     }
-                    if( releaseEvent.button == eq::PTR_BUTTON2 )
+                    case eq::PTR_BUTTON2:
+                    {
+                        button = OF_MOUSE_BUTTON_MIDDLE;
+                        break;
+                    }
+                    case eq::PTR_BUTTON3:
                     {
                         button = OF_MOUSE_BUTTON_RIGHT;
+                        break;
                     }
                 }
                 windows_iterator->second->_buttonPressed = false;
                 windows_iterator->second->_buttonInUse = button;
-                windows_iterator->second->events().notifyMouseReleased(windows_iterator->second->events().getMouseX(), windows_iterator->second->events().getMouseY(), button);
+                windows_iterator->second->events().notifyMouseReleased( releaseEvent.x, releaseEvent.y, button );
                 break;
             }
             case eq::Event::WINDOW_POINTER_MOTION:
             {
+                ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
                 if( windows_iterator->second->_buttonPressed )
                 {
                     windows_iterator->second->events().notifyMouseDragged( event.pointerMotion.x, event.pointerMotion.y, windows_iterator->second->_buttonInUse );
@@ -260,6 +281,10 @@ void Renderer::processWindowEvent( eq::Window* eqWindow, const eq::Event& event 
                 {
                     windows_iterator->second->events().notifyMouseMoved( event.pointerMotion.x, event.pointerMotion.y );
                 }
+                break;
+            }
+            default:
+            {
                 break;
             }
         }
