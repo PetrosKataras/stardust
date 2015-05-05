@@ -25,6 +25,11 @@ void Renderer::applyRenderContext()
     _internalRenderer->applyRenderContext();
 }
 
+void Renderer::updateNearFar( const eq::Vector4f& boundingSphere )
+{
+    _internalRenderer->updateNearFar( boundingSphere );
+}
+
 void Renderer::setNearFar( const float nearPlane, const float farPlane )
 {
     _internalRenderer->setNearFar( nearPlane, farPlane );
@@ -38,6 +43,21 @@ void Renderer::enableScreenFrustum()
 void Renderer::enablePerspectiveFrustum()
 {
     _internalRenderer->enablePerspectiveFrustum();
+}
+
+const eq::Frustumf& Renderer::getFrustum() const
+{
+    return _internalRenderer->getFrustum();
+}
+
+const eq::Matrix4f& Renderer::getViewMatrix() const
+{
+    return _internalRenderer->getViewMatrix();
+}
+
+const eq::Matrix4f& Renderer::getModelMatrix() const
+{
+    return _internalRenderer->getModelMatrix();
 }
 
 void Renderer::setImplementation( internal::Renderer* internalRenderer )

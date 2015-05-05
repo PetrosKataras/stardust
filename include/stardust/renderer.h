@@ -2,6 +2,7 @@
 
 #include <ofMain.h>
 #include <co/object.h>
+#include <seq/types.h>
 
 namespace stardust
 {
@@ -28,6 +29,12 @@ friend internal::Renderer;
 
         void applyRenderContext();
         void setNearFar( const float nearPlane, const float farPlane );
+        void updateNearFar( const eq::Vector4f& boundingSphere );
+
+        const eq::Frustumf& getFrustum() const;
+        const eq::Matrix4f& getViewMatrix() const;
+        const eq::Matrix4f& getModelMatrix() const;
+
         void enableScreenFrustum();
         void enablePerspectiveFrustum();
 
