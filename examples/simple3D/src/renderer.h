@@ -45,7 +45,7 @@ namespace simple3DApp
         virtual void draw( co::Object* frameData );
 
     private:
-        ofEasyCam cam;
+        ofCamera cam;
     };
 
 }

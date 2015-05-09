@@ -37,7 +37,7 @@ Renderer::Renderer( )
 
 void Renderer::init( co::Object* initData )
 {
-	cam.setDistance(100);
+    cam.setPosition(ofVec3f(0,0,100));
 }
 
 void Renderer::exit()
@@ -54,6 +54,7 @@ void Renderer::draw( co::Object* frameDataObj )
     cam.setProjectionMatrix(frustum);
     setNearFar(10, 1000);
 	cam.begin();		
+        applyModelMatrix();
         ofRotateX(ofRadToDeg(.5));
         ofRotateY(ofRadToDeg(-.5));
         ofBackground(0);
