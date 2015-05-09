@@ -97,6 +97,9 @@ public:
     ofCoreEvents& events();
 
     std::shared_ptr<ofBaseRenderer>  ofRenderer();
+    
+    virtual seq::ViewData* createViewData();
+
 protected:
     virtual bool init( co::Object* initData );
     virtual bool exit();

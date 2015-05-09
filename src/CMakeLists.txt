@@ -7,6 +7,7 @@
 ### =============================================================================================================== 
 add_library( stardust STATIC ${PROJECT_SOURCE_DIR}/src/stardust/application.cpp
                              ${PROJECT_SOURCE_DIR}/src/stardust/renderer.cpp
+                             ${PROJECT_SOURCE_DIR}/src/stardust/viewData.cpp
                              ${PROJECT_SOURCE_DIR}/src/stardust/internal/renderer.cpp
                              ${PROJECT_SOURCE_DIR}/src/stardust/internal/window.cpp
 )

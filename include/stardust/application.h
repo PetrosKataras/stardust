@@ -72,6 +72,7 @@ namespace stardust
 {
 
 class Renderer;
+class ViewData;
 
 class Application : public seq::Application
 {
@@ -85,7 +86,12 @@ public:
     virtual seq::Renderer* createRenderer() final;
     virtual shared_ptr<stardust::Renderer>  createStardustRenderer() = 0;
 
+    virtual seq::ViewData* createViewData();
+
     virtual co::Object* createObject( const uint32_t type );
+
+    virtual void update(){};
+    virtual bool handleEvent( const eq::Event& event ){ return true; }
 
 protected:
 

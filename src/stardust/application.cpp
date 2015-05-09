@@ -65,6 +65,7 @@
 #include <application.h>
 #include <internal/renderer.h>
 #include <renderer.h>
+#include <viewData.h>
 
 
 namespace stardust
@@ -90,6 +91,15 @@ bool Application::exit()
 seq::Renderer* Application::createRenderer()
 {
     return new internal::Renderer( *this );
+}
+
+seq::ViewData* Application::createViewData()
+{
+    ViewData* viewData = new ViewData;
+    
+    viewData->setApplication( this );
+
+    return static_cast<seq::ViewData*>( viewData );
 }
 
 co::Object* Application::createObject( const uint32_t type )

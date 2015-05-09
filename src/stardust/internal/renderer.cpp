@@ -66,11 +66,17 @@
 #include <eq/client/window.h>
 #include <internal/window.h>
 #include <renderer.h>
+#include <viewData.h>
 
 namespace stardust
 {
 namespace internal
 {
+
+seq::ViewData* Renderer::createViewData()
+{
+    return static_cast<seq::ViewData*>( new ViewData );
+}
 
 bool Renderer::init( co::Object* initData )
 {
