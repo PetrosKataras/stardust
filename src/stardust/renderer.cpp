@@ -25,6 +25,11 @@ void Renderer::applyRenderContext()
     _internalRenderer->applyRenderContext();
 }
 
+void Renderer::applyModelMatrix()
+{
+    _internalRenderer->applyModelMatrix();
+}
+
 void Renderer::updateNearFar( const eq::Vector4f& boundingSphere )
 {
     _internalRenderer->updateNearFar( boundingSphere );

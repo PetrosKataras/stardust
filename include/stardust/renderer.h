@@ -31,6 +31,8 @@ friend internal::Renderer;
         void setNearFar( const float nearPlane, const float farPlane );
         void updateNearFar( const eq::Vector4f& boundingSphere );
 
+        virtual void applyModelMatrix();
+
         const eq::Frustumf& getFrustum() const;
         const eq::Matrix4f& getViewMatrix() const;
         const eq::Matrix4f& getModelMatrix() const;
