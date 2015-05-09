@@ -52,9 +52,8 @@ bool Application::run()
     return stardust::Application::run( &_frameData );
 }
 
-void Application::test()
+void Application::update()
 {
-    LBERROR << " ____TEST____WORKS____ " << std::endl;
 }
 
 bool Application::exit()

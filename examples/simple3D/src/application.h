@@ -19,7 +19,7 @@ public:
     virtual shared_ptr<stardust::Renderer>  createStardustRenderer();
     virtual co::Object* createObject( const uint32_t type );
 
-    virtual void test();
+    virtual void update();
 
 private:
     FrameData _frameData;
