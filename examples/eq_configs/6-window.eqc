@@ -1,0 +1,110 @@
+server
+{
+    connection { hostname "127.0.0.1" }
+    config
+    {
+        appNode
+        {
+            pipe
+            {
+                window
+                {
+                    name "left-1"
+                    viewport [ 0 100 480 300 ]
+                    channel
+                    {
+                        name "left-1"
+                    }
+                }
+                window
+                {
+                    name "middle-1"
+                    viewport [ 480 100 480 300 ]
+                    channel
+                    {
+                        name "middle-1"
+                    }
+                }
+                window
+                {
+                    name "right-1"
+                    viewport [ 960 100 480 300 ]
+                    channel
+                    {
+                        name "right-1"
+                    }
+                }
+                window
+                {
+                    name "left-2"
+                    viewport [ 0 400 480 300 ]
+                    channel
+                    {
+                        name "left-2"
+                    }
+                }
+                window
+                {
+                    name "middle-2"
+                    viewport [ 480 400 480 300 ]
+                    channel
+                    {
+                        name "middle-2"
+                    }
+                }
+                window
+                {
+                    name "right-2"
+                    viewport [ 960 400 480 300 ]
+                    channel
+                    {
+                        name "right-2"
+                    }
+                }
+            }
+        }
+
+        observer {}
+        layout { view { observer 0 }}
+        canvas
+        {
+            layout 0
+            wall
+            {
+                bottom_left  [ -1.2 -.5 -1 ]
+                bottom_right [  1.2 -.5 -1 ]
+                top_left     [ -1.2  .5 -1 ]
+            }
+            segment
+            { 
+                channel "left-1"
+                viewport [ 0 0.5 .3333 .5 ]
+            }
+            segment
+            { 
+                channel "middle-1"
+                viewport [ .3333 0.5 .3333 .5 ]
+            }
+            segment
+            { 
+                channel "right-1"
+                viewport [ .6666 0.5 .3333 .5 ]
+            }
+            segment
+            { 
+                channel "left-2"
+                viewport [ 0 0 .3333 .5 ]
+            }
+            segment
+            { 
+                channel "middle-2"
+                viewport [ .3333 0 .3333 .5 ]
+            }
+            segment
+            { 
+                channel "right-2"
+                viewport [ .6666 0 .3333 .5 ]
+            }
+        }
+    }    
+}
