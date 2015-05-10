@@ -12,27 +12,27 @@ A prerequisite for working with stardust is reading the Equalizer User & Program
 
 #### How To:
 
-`$STARDUST_DIR` will be the directory where you cloned stardust.
+`$STARDUST_ROOT` will be the directory where you cloned stardust for the purposes of this README.
 
 1. Recursively clone stardust and dependencies :  
 `git clone --recursive git@github.com:PetrosKataras/stardust.git`
 
 2. Install dependencies and compile openFrameworks as per usual.  
-`cd $STARDUST_DIR/libs/openFrameworks/scripts/linux/ubuntu && ./install_dependencies.sh`  
-`cd $STARDUST_DIR/libs/openFrameworks/scripts/linux && ./compileOF.sh`
+`cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux/ubuntu && ./install_dependencies.sh`  
+`cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux && ./compileOF.sh`
 
 3. Compile and install Equalizer and dependencies :  
-`cd $STARDUST_DIR/utils/linux && ./install_EQ_dependencies.sh`  
-`cd $STARDUST_DIR/utils/linux && ./build_EQ.sh`
+`cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`
+`cd $STARDUST_ROOT/utils/linux && ./build_EQ.sh`
 
 4. Compile and optionally install ( run make followed by make install ) stadust:  
-`cd $STARDUST_DIR && make`
+`cd $STARDUST_ROOT && make`
 
-The default install path for stardust is under `$STARDUST_DIR/install`.
+The default install path for stardust is under `$STARDUST_ROOT/install`.
 
 After building stardust you should be ready to compile and run the examples. The only requirement is to set `Stardust_DIR` to point to the directory where stardust produced its export configuration files. 
 
-If you have installed stadust with `make install` then `Stadust_DIR` should point to `$INSTALL_PREFIX/share/stardust/cmake` . If you haven't installed stadust you can simply point `Stardust_DIR` to the directory where it was built.
+If you have installed stadust with `make install` then `Stardust_DIR` should point to `$INSTALL_PREFIX/share/stardust/cmake` . If you haven't installed stardust you can simply point `Stardust_DIR` to the directory where it was built.
 
 You can change this and any other project variable with the cmake tool of your choice or by just specifying command line options.
 
