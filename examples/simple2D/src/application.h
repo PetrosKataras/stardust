@@ -1,3 +1,11 @@
+/* Author: Petros Kataras 2015 <petroskataras@gmail.com>
+ *
+ * Based on sequel examples and modified for stardust.
+ *
+ * Original sequel examples: Copyright (c) 2011-2014, Stefan Eilemann <eile@eyescale.ch>
+ *
+ */
+
 #pragma once
 
 #include <stardust/application.h>
