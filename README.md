@@ -22,7 +22,7 @@ A prerequisite for working with stardust is reading the Equalizer User & Program
 `cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux && ./compileOF.sh`
 
 3. Compile and install Equalizer and dependencies :  
-`cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`
+`cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`  
 `cd $STARDUST_ROOT/utils/linux && ./build_EQ.sh`
 
 4. Compile and optionally install ( run make followed by make install ) stadust:  
