@@ -35,3 +35,5 @@ After building stardust you should be ready to compile and run the examples. The
 If you have installed stadust with `make install` then `Stadust_DIR` should point to `$INSTALL_PREFIX/share/stardust/cmake` . If you haven't installed stadust you can simply point `Stardust_DIR` to the directory where it was built.
 
 You can change this and any other project variable with the cmake tool of your choice or by just specifying command line options.
+
+Stardust, following Equalizer's licensing scheme, is released under the terms of the LGPL 2.1 license. 
