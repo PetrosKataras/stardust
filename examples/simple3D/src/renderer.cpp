@@ -9,7 +9,7 @@ Renderer::Renderer( )
 
 void Renderer::init( co::Object* initData )
 {
-    cam.setPosition(ofVec3f(0,0,100));
+    cam.setPosition(ofVec3f(0,0, 100));
 }
 
 void Renderer::exit()
@@ -22,17 +22,18 @@ void Renderer::draw( co::Object* frameDataObj )
     Application& application = static_cast< Application& >( getApplication( ));
     applyRenderContext();
     ofEnableDepthTest();
+    ofBackground(120, 120, 120);
     ofMatrix4x4 frustum(getFrustum().compute_matrix());
-    cam.setProjectionMatrix(frustum);
-    setNearFar(10, 1000);
+    setNearFar(10, 10000);
 	cam.begin();		
+        ofSetMatrixMode(ofMatrixMode::OF_MATRIX_PROJECTION);
+        ofLoadMatrix(frustum);
+        ofSetMatrixMode(ofMatrixMode::OF_MATRIX_MODELVIEW);
         applyModelMatrix();
         ofRotateX(ofRadToDeg(.5));
         ofRotateY(ofRadToDeg(-.5));
-        ofBackground(0);
         ofSetColor(255,0,0);
         ofFill();
-        ofSetColor(255,0,255);
         ofDrawBox(30);
         ofNoFill();
         ofSetColor(0);
