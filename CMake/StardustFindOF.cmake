@@ -47,15 +47,6 @@ if( NOT OF_LIBRARY AND NOT OF_LIBRARY_D )
 endif()
 
 list(APPEND OF_LIBRARY_DEPENDS
-  ${OF_ROOT_DIRECTORY}/libs/glfw/lib/${OF_LIB_PATH}/libglfw3.a
-  ${OF_ROOT_DIRECTORY}/libs/kiss/lib/${OF_LIB_PATH}/libkiss.a
-  ${OF_ROOT_DIRECTORY}/libs/tess2/lib/${OF_LIB_PATH}/libtess2.a
-  ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/libPocoNet.a
-  ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/libPocoNetSSL.a
-  ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/libPocoCrypto.a
-  ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/libPocoUtil.a
-  ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/libPocoXML.a
-  ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/libPocoFoundation.a
   ${X11_LIBRARIES}
   ${X11_Xcursor_LIB}
   ${X11_Xxf86vm_LIB}

@@ -16,23 +16,12 @@ if(NO_LIBSNDFILE)
 elseif (SNDFILE_INCLUDE_DIR AND SNDFILE_LIBRARY)
 	set(SNDFILE_LIBRARIES ${SNDFILE_LIBRARY})
 	set(SNDFILE_FOUND TRUE)
-elseif (APPLE)
-	set(SNDFILE_FOUND TRUE)
-	set(SNDFILE_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/../external_libraries/libsndfile/)
-	set(SNDFILE_LIBRARIES ${CMAKE_CURRENT_LIST_DIR}/../platform/mac/lib/scUBlibsndfile.a)
-	add_definitions("-isystem ${CMAKE_CURRENT_LIST_DIR}/../external_libraries/libsndfile")
-
-	# TODO on non-apple platforms, we need to be able to test for >=1018.
-	# (On apple it is known true, because we bundle a later version.)
-	add_definitions("-DLIBSNDFILE_1018")
-
 else()
 	find_path(SNDFILE_INCLUDE_DIR sndfile.h)
-
 	find_library(SNDFILE_LIBRARY NAMES sndfile)
 
-	# Handle the QUIETLY and REQUIRED arguments and set SNDFILE_FOUND to TRUE if
-	# all listed variables are TRUE.
+	# Handle the QUIETLY and REQUIRED arguments and set
+	# SNDFILE_FOUND to TRUE if all listed variables are TRUE.
 	include(FindPackageHandleStandardArgs)
 	find_package_handle_standard_args(Sndfile DEFAULT_MSG
 		SNDFILE_LIBRARY SNDFILE_INCLUDE_DIR)

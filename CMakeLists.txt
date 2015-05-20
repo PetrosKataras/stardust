@@ -83,6 +83,7 @@ set(STARDUST_DEPENDS_INCLUDES ${EQUALIZER_INCLUDE_DIRS} ${OF_INCLUDE_DIRS})
 ### Adds stardust as a target.
 ### ======================================================================
 add_subdirectory( src )
+add_subdirectory( examples/simple3D )
 
 ### ======================================================================
 ### Create the install config file for finding stardust and its
