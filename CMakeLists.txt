@@ -9,7 +9,7 @@ cmake_minimum_required( VERSION 2.8 FATAL_ERROR )
 
 ### ======================================================================
 ### User option for setting the install prefix.
-### ===============================================================================================================
+### ======================================================================
 set( CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/install" CACHE STRING "Set your installation dest. here" )
 
 ### ======================================================================
@@ -59,10 +59,12 @@ set( Stardust_VERSION_PATCH 0 )
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake" )
 
 ### ======================================================================
-### Locate global dependencies. These files provide some utilies for finding and including dependencies of stardust.
-### StardustFindOF tries to find and include openFrameworks and its dependencies.
-### StardustFindEQ tries to locate EQ config cmake files in order to pull EQ and its dependencies ( Lunchbox, Collage etc. )
-### Check the individual files for more info on what is happening exactly...
+### Locate global dependencies. These files provide some utilies for
+### finding and including dependencies of stardust.  StardustFindOF
+### tries to find and include openFrameworks and its dependencies.
+### StardustFindEQ tries to locate EQ config cmake files in order to
+### pull EQ and its dependencies ( Lunchbox, Collage etc. ) Check the
+### individual files for more info on what is happening exactly...
 ### ======================================================================
 include(StardustFindOF)
 include(StardustFindEQ)
@@ -73,9 +75,8 @@ include(StardustFindEQ)
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib" )
 
 ### ======================================================================
-### Stardust dependencies.
+### Stardust include dependencies.
 ### ======================================================================
-add_subdirectory(libs/Equalizer)
 set(STARDUST_DEPENDS_INCLUDES ${EQUALIZER_INCLUDE_DIRS} ${OF_INCLUDE_DIRS})
 
 ### ======================================================================
