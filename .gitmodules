@@ -1,18 +1,6 @@
 [submodule "libs/openFrameworks"]
 	path = libs/openFrameworks
 	url = git@github.com:PetrosKataras/openFrameworks.git
-[submodule "libs/equalizer/Lunchbox"]
-	path = libs/equalizer/Lunchbox
-	url = git@github.com:Eyescale/Lunchbox.git
-[submodule "libs/equalizer/vmmlib"]
-	path = libs/equalizer/vmmlib
-	url = git@github.com:Eyescale/vmmlib.git
-[submodule "libs/equalizer/Collage"]
-	path = libs/equalizer/Collage
-	url = git@github.com:Eyescale/Collage.git
-[submodule "libs/equalizer/Pression"]
-	path = libs/equalizer/Pression
-	url = git@github.com:Eyescale/Pression.git
-[submodule "libs/equalizer/Equalizer"]
-	path = libs/equalizer/Equalizer
-	url = git@github.com:PetrosKataras/Equalizer.git
+[submodule "libs/Equalizer"]
+	path = libs/Equalizer
+	url = git@github.com:Eyescale/Equalizer.git

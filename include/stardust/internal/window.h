@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -75,10 +75,9 @@ namespace stardust
     {
         class Window  : public ofAppBaseGLWindow
         {
-        
         public:
 
-            Window( eq::Window* window );
+            Window();
             virtual ~Window();
 
             static void loop(){};
@@ -96,7 +95,7 @@ namespace stardust
 
             virtual shared_ptr<ofBaseRenderer> & renderer(){ return currentRenderer; }
 
-            virtual ofPoint getWindowPosition(); 
+            virtual ofPoint getWindowPosition();
             virtual ofPoint getWindowSize();
 
             ofRectangle getPixelViewport();
@@ -121,7 +120,6 @@ namespace stardust
             void    setEqViewport( const eq::Viewport& vp );
 
         private:
-            eq::Window* eqWindow;
             shared_ptr<ofBaseRenderer>  currentRenderer;
             ofCoreEvents coreEvents;
 

@@ -44,11 +44,9 @@ friend internal::Renderer;
         ofCoreEvents& events();
 
     protected:
-        ///> The internal renderer should already be set when these functions become available. 
+        ///> The internal renderer should already be set when these functions become available.
         ///> Right now its set just before calling init on the stardust renderer which should be the entry point for users.
         ///> If not set, fail miserably since there is something seriously wrong.
-        Application& getApplication();
-        const Application& getApplication() const;
         int getCurrentWindowWidth();
         int getCurrentWindowHeight();
 

@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -27,7 +27,7 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * Equalizer:
  * ==========
  *
@@ -71,9 +71,8 @@ namespace stardust
 namespace internal
 {
 
-Window::Window( eq::Window* window )
-    : eqWindow( window )
-    , _buttonPressed(false)
+Window::Window()
+    : _buttonPressed(false)
 {
 }
 
@@ -81,71 +80,11 @@ Window::~Window()
 {
 }
 
-ofRectangle Window::getPixelViewport()
-{
-    return ofRectangle( eqWindow->getPixelViewport().x,
-                        eqWindow->getPixelViewport().y,
-                        eqWindow->getPixelViewport().w,
-                        eqWindow->getPixelViewport().h 
-                      );
-}
-
-const eq::Channels& Window::getEqChannels() const
-{
-    return eqWindow->getChannels();
-}
-
-const eq::PixelViewport& Window::getEqPixelViewport() const
-{
-    return eqWindow->getPixelViewport();
-}
-
-const eq::Viewport& Window::getEqViewport() const
-{
-    return eqWindow->getViewport();
-}
-
-void Window::setEqPixelViewport( const eq::PixelViewport& pvp )
-{
-    eqWindow->setPixelViewport( pvp );
-}
-
-void Window::setEqViewport( const eq::Viewport& vp )
-{
-    eqWindow->setViewport( vp );
-}
-
 void Window::initialiaze()
 {
     currentRenderer = shared_ptr<ofBaseRenderer>( new ofGLRenderer(this) );
     static_cast<ofGLRenderer*>(currentRenderer.get())->setup();
     static_cast<ofGLRenderer*>(currentRenderer.get())->setOrientation( OF_ORIENTATION_DEFAULT, false );
-}
-
-ofPoint Window::getWindowPosition()
-{
-    windowPos.x = eqWindow->getPixelViewport().x;
-    windowPos.y = eqWindow->getPixelViewport().y;
-    return windowPos;
-}
-
-ofPoint Window::getWindowSize() 
-{
-    windowSize.x = getWidth();
-    windowSize.y = getHeight();
-    return windowSize;
-}
-
-int Window::getWidth() 
-{
-    width = eqWindow->getPixelViewport().w;
-    return width;
-}
-
-int Window::getHeight()
-{
-    height = eqWindow->getPixelViewport().h; 
-    return height;
 }
 
 }

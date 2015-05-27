@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -97,29 +97,26 @@ public:
     ofCoreEvents& events();
 
     std::shared_ptr<ofBaseRenderer>  ofRenderer();
-    
+
     virtual seq::ViewData* createViewData();
 
 protected:
-    virtual bool init( co::Object* initData );
-    virtual bool exit();
+    bool init( co::Object* initData ) final;
+    bool exit() final;
 
-    virtual void draw( co::Object* frameData );
+    void draw( co::Object* frameData ) final;
 
-    virtual void notifyWindowInitGL( eq::Window* eqWindow );
-    virtual void notifyWindowExitGL( eq::Window* eqWindow );
+    bool initContext( co::Object* ) final;
+    bool exitContext() final;
 
-    virtual void processWindowEvent( eq::Window* eqWindow, const eq::Event& event );
+    bool processEvent( const eq::Event& event ) final;
 
 
 private:
 
-    std::map<const eq::Window*, shared_ptr<internal::Window> > _windows;
-    std::map<const eq::Window*, shared_ptr<internal::Window> >::iterator windows_iterator; 
+    std::map< uint32_t, shared_ptr<internal::Window> > _windows;
     shared_ptr<stardust::Renderer> _userRenderer;
     co::Object* _initData;
 };
 }
 }
-
-
