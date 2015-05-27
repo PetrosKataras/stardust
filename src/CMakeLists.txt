@@ -5,7 +5,7 @@
 ### ===============================================================================================================
 ### *Dust
 ### ===============================================================================================================
-add_library( stardust ${PROJECT_SOURCE_DIR}/src/stardust/application.cpp
+add_library( stardust SHARED ${PROJECT_SOURCE_DIR}/src/stardust/application.cpp
   ${PROJECT_SOURCE_DIR}/src/stardust/renderer.cpp
   ${PROJECT_SOURCE_DIR}/src/stardust/viewData.cpp
   ${PROJECT_SOURCE_DIR}/src/stardust/internal/renderer.cpp
@@ -29,8 +29,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 ### This allows for the link line of stardust to appear on the link line of other targets linking with stardust
 ### through the INTERFACE_LINK_LIBRARIES property.
 ### ===============================================================================================================
-target_link_libraries( stardust INTERFACE debug "${OF_LIBRARY_D}" "${OF_LIBRARY_DEPENDS}" "${EQUALIZER_LIBRARIES}"
-                                        optimized "${OF_LIBRARY}" "${OF_LIBRARY_DEPENDS}" "${EQUALIZER_LIBRARIES}")
+target_link_libraries( stardust "${OF_LIBRARY}" "${OF_LIBRARY_DEPENDS}" "${EQUALIZER_LIBRARIES}")
 
 
 ### ===============================================================================================================
@@ -38,8 +37,10 @@ target_link_libraries( stardust INTERFACE debug "${OF_LIBRARY_D}" "${OF_LIBRARY_
 ### ===============================================================================================================
 install( TARGETS stardust
          EXPORT stardustTargets
-         ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}"
-         INCLUDES DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
+         INCLUDES DESTINATION include
+         ARCHIVE DESTINATION lib
+         LIBRARY DESTINATION lib
+         RUNTIME DESTINATION bin
 )
 
 ### ===============================================================================================================
