@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -65,7 +65,6 @@
  */
 #pragma once
 
-#include <eq/client/window.h>
 #include <ofAppBaseWindow.h>
 #include <ofBaseTypes.h>
 
@@ -75,10 +74,9 @@ namespace stardust
     {
         class Window  : public ofAppBaseGLWindow
         {
-        
         public:
 
-            Window( eq::Window* window );
+            Window();
             virtual ~Window();
 
             static void loop(){};
@@ -96,13 +94,13 @@ namespace stardust
 
             virtual shared_ptr<ofBaseRenderer> & renderer(){ return currentRenderer; }
 
-            virtual ofPoint getWindowPosition(); 
-            virtual ofPoint getWindowSize();
+            virtual ofPoint getWindowPosition(){};
+            virtual ofPoint getWindowSize(){};
 
             ofRectangle getPixelViewport();
 
-            virtual int getWidth();
-            virtual int	getHeight();
+            virtual int getWidth(){};
+            virtual int getHeight(){};
 
             virtual void * getWindowContext(){return NULL;};
             virtual ofCoreEvents & events(){ return coreEvents; }
@@ -112,16 +110,8 @@ namespace stardust
         protected:
 
 
-            const   eq::Channels& getEqChannels() const;
-
-            const   eq::PixelViewport& getEqPixelViewport() const;
-            const   eq::Viewport& getEqViewport() const;
-
-            void    setEqPixelViewport( const eq::PixelViewport& pvp );
-            void    setEqViewport( const eq::Viewport& vp );
 
         private:
-            eq::Window* eqWindow;
             shared_ptr<ofBaseRenderer>  currentRenderer;
             ofCoreEvents coreEvents;
 
@@ -133,3 +123,4 @@ namespace stardust
         };
     }
 }
+

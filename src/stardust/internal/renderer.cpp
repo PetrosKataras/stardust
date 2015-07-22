@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -63,7 +63,6 @@
  *
  */
 #include <internal/renderer.h>
-#include <eq/client/window.h>
 #include <internal/window.h>
 #include <renderer.h>
 #include <viewData.h>
@@ -72,6 +71,8 @@ namespace stardust
 {
 namespace internal
 {
+typedef std::map< uint32_t, shared_ptr<internal::Window> >::const_iterator
+    WindowsCIter;
 
 seq::ViewData* Renderer::createViewData()
 {
@@ -86,18 +87,18 @@ bool Renderer::init( co::Object* initData )
 
 void Renderer::draw( co::Object* frameData )
 {
-    if( _userRenderer )
-    {
-        /// update events
-        windows_iterator = _windows.find( getCurrentWindow() );
-        if( windows_iterator != _windows.end() ){
-            windows_iterator->second->events().notifyUpdate();
-        }
-        ///> update callback
-        _userRenderer->update();
-        ///> draw callback
-        _userRenderer->draw( frameData );
+    if( !_userRenderer )
+        return;
+
+    /// update events
+    WindowsCIter i = _windows.find( getWindowID() );
+    if( i != _windows.end() ){
+        i->second->events().notifyUpdate();
     }
+    ///> update callback
+    _userRenderer->update();
+    ///> draw callback
+    _userRenderer->draw( frameData );
 }
 
 bool Renderer::exit()
@@ -127,74 +128,60 @@ void Renderer::enablePerspectiveFrustum()
 }
 int Renderer::getCurrentWindowWidth()
 {
-   windows_iterator = _windows.find( getCurrentWindow() );
-   if( windows_iterator != _windows.end() ){
-        return windows_iterator->second->getWidth();
-   }
-   return -1;
+    return getPixelViewport().w;
 }
 
 int Renderer::getCurrentWindowHeight()
 {
-    windows_iterator = _windows.find( getCurrentWindow() );
-    if( windows_iterator != _windows.end() ){
-        return windows_iterator->second->getHeight();
-    }
-    return -1;
+    return getPixelViewport().h;
 }
 
 ofPoint Renderer::getCurrentWindowPosition()
 {
-    windows_iterator = _windows.find( getCurrentWindow() );
-    if( windows_iterator != _windows.end() ){
-        return windows_iterator->second->getWindowPosition();
-    }
-    return ofPoint(-1,-1);
+    return ofPoint( getPixelViewport().x, getPixelViewport().y );
 }
 
 ofPoint Renderer::getCurrentWindowSize()
 {
-    windows_iterator = _windows.find( getCurrentWindow() );
-    if( windows_iterator != _windows.end() ){
-        return windows_iterator->second->getWindowSize();
-    }
-    return ofPoint(-1,-1);
+    return ofPoint( getPixelViewport().w, getPixelViewport().h );
 }
 
 ofRectangle Renderer::getCurrentPixelViewport()
 {
-    windows_iterator = _windows.find( getCurrentWindow() );
-    if( windows_iterator != _windows.end() ){
-        return windows_iterator->second->getPixelViewport();
-    }
-    return ofRectangle();
+    const seq::PixelViewport& pvp = getPixelViewport();
+    return ofRectangle( pvp.x, pvp.y, pvp.w, pvp.h );
 }
 
 shared_ptr<ofBaseRenderer> Renderer::ofRenderer()
 {
-    windows_iterator = _windows.find( getCurrentWindow() );
-    if( windows_iterator != _windows.end() ){
-        return windows_iterator->second->renderer();
+    WindowsCIter i = _windows.find( getWindowID() );
+    if( i != _windows.end() ){
+        return i->second->renderer();
     }
-    LBERROR << "Stardust::Renderer::ofRenderer() ---> Something is seriously wrong -- Stardust could not find an OF renderer for window " << getCurrentWindow() << "____Prepare to FAIL____" << std::endl;
+    LBERROR << "Stardust::Renderer::ofRenderer() ---> Something is seriously wrong -- Stardust could not find an OF renderer for window " << getWindowID() << "____Prepare to FAIL____" << std::endl;
+    return 0;
 }
 
 ofCoreEvents& Renderer::events()
 {
-    windows_iterator = _windows.find( getCurrentWindow() );
-    return windows_iterator->second->events();
+    WindowsCIter i = _windows.find( getWindowID() );
+    return i->second->events();
 }
 
-void Renderer::notifyWindowInitGL( eq::Window* eqWindow )
+bool Renderer::initContext( co::Object* object )
 {
-    _windows[ eqWindow ] =  shared_ptr<internal::Window>( new internal::Window( eqWindow ) );
-    _windows[ eqWindow ]->initialiaze();
+    if( !seq::Renderer::initContext( object ))
+        return false;
 
-    ofGetMainLoop()->addWindow( _windows[ eqWindow ] );
+    const uint32_t windowID = getWindowID();
+    _windows[ windowID ] = shared_ptr<internal::Window>( new internal::Window );
+    _windows[ windowID ]->initialiaze();
+
+    ofGetMainLoop()->addWindow( _windows[ windowID ] );
     ///> TODO: Loop through windows.
-    ofGetMainLoop()->setCurrentWindow( _windows[ eqWindow ] );
+    ofGetMainLoop()->setCurrentWindow( _windows[ windowID ] );
 
-    if( _userRenderer ) return;
+    if( _userRenderer ) return true;
 
     _userRenderer = static_cast<stardust::Application&>(getApplication()).createStardustRenderer();
 
@@ -204,98 +191,98 @@ void Renderer::notifyWindowInitGL( eq::Window* eqWindow )
         _userRenderer->init( _initData );
     }
 
+    return true;
 }
 
-void Renderer::notifyWindowExitGL( eq::Window* eqWindow )
+bool Renderer::exitContext()
 {
     ///> TODO: Clear windows map.......
 
+    return seq::Renderer::exitContext();
 }
 
-void Renderer::processWindowEvent( eq::Window* eqWindow, const eq::Event& event )
+bool Renderer::processEvent( const eq::Event& event )
 {
     ///> forward moused/keyboard events...
-    windows_iterator = _windows.find( getCurrentWindow() );
-    if( windows_iterator != _windows.end() )
+    WindowsCIter i = _windows.find( getWindowID() );
+    if( i == _windows.end() )
+        return false;
+
+    switch(event.type)
     {
-        switch(event.type)
+    case eq::Event::WINDOW_POINTER_BUTTON_PRESS:
+    {
+        ofGetMainLoop()->setCurrentWindow(i->second);
+        const eq::PointerEvent& pressEvent = event.pointerButtonPress;
+        int button = 0;
+        switch( pressEvent.button )
         {
-            case eq::Event::WINDOW_POINTER_BUTTON_PRESS:
-            {
-                ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
-                const eq::PointerEvent& pressEvent = event.pointerButtonPress;
-                int button = 0;
-                switch( pressEvent.button )
-                {
-                    case eq::PTR_BUTTON1:
-                    {
-                        button = OF_MOUSE_BUTTON_LEFT;
-                        break;
-                    }
-                    case eq::PTR_BUTTON2:
-                    {
-                        button = OF_MOUSE_BUTTON_MIDDLE;
-                        break;
-                    }
-                    case eq::PTR_BUTTON3:
-                    {
-                        button = OF_MOUSE_BUTTON_RIGHT;
-                        break;
-                    }
-                }
-                windows_iterator->second->_buttonPressed = true;
-                windows_iterator->second->_buttonInUse = button;
-                windows_iterator->second->events().notifyMousePressed( pressEvent.x, pressEvent.y, button );
-                break;
-            }
-            case eq::Event::WINDOW_POINTER_BUTTON_RELEASE:
-            {
-                ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
-                const eq::PointerEvent& releaseEvent = event.pointerButtonRelease;
-                int button = 0;
-                switch( releaseEvent.button )
-                {
-                    case eq::PTR_BUTTON1:
-                    {
-                        button = OF_MOUSE_BUTTON_LEFT;
-                        break;
-                    }
-                    case eq::PTR_BUTTON2:
-                    {
-                        button = OF_MOUSE_BUTTON_MIDDLE;
-                        break;
-                    }
-                    case eq::PTR_BUTTON3:
-                    {
-                        button = OF_MOUSE_BUTTON_RIGHT;
-                        break;
-                    }
-                }
-                windows_iterator->second->_buttonPressed = false;
-                windows_iterator->second->_buttonInUse = button;
-                windows_iterator->second->events().notifyMouseReleased( releaseEvent.x, releaseEvent.y, button );
-                break;
-            }
-            case eq::Event::WINDOW_POINTER_MOTION:
-            {
-                ofGetMainLoop()->setCurrentWindow(windows_iterator->second);
-                if( windows_iterator->second->_buttonPressed )
-                {
-                    windows_iterator->second->events().notifyMouseDragged( event.pointerMotion.x, event.pointerMotion.y, windows_iterator->second->_buttonInUse );
-                }
-                else
-                {
-                    windows_iterator->second->events().notifyMouseMoved( event.pointerMotion.x, event.pointerMotion.y );
-                }
-                break;
-            }
-            default:
-            {
-                break;
-            }
+        case eq::PTR_BUTTON1:
+        {
+            button = OF_MOUSE_BUTTON_LEFT;
+            break;
         }
+        case eq::PTR_BUTTON2:
+        {
+            button = OF_MOUSE_BUTTON_MIDDLE;
+            break;
+        }
+        case eq::PTR_BUTTON3:
+        {
+            button = OF_MOUSE_BUTTON_RIGHT;
+            break;
+        }
+        }
+        i->second->_buttonPressed = true;
+        i->second->_buttonInUse = button;
+        i->second->events().notifyMousePressed( pressEvent.x, pressEvent.y, button );
+        return true;
+    }
+    case eq::Event::WINDOW_POINTER_BUTTON_RELEASE:
+    {
+        ofGetMainLoop()->setCurrentWindow(i->second);
+        const eq::PointerEvent& releaseEvent = event.pointerButtonRelease;
+        int button = 0;
+        switch( releaseEvent.button )
+        {
+        case eq::PTR_BUTTON1:
+        {
+            button = OF_MOUSE_BUTTON_LEFT;
+            break;
+        }
+        case eq::PTR_BUTTON2:
+        {
+            button = OF_MOUSE_BUTTON_MIDDLE;
+            break;
+        }
+        case eq::PTR_BUTTON3:
+        {
+            button = OF_MOUSE_BUTTON_RIGHT;
+            break;
+        }
+        }
+        i->second->_buttonPressed = false;
+        i->second->_buttonInUse = button;
+        i->second->events().notifyMouseReleased( releaseEvent.x, releaseEvent.y, button );
+        return true;
+    }
+    case eq::Event::WINDOW_POINTER_MOTION:
+        ofGetMainLoop()->setCurrentWindow(i->second);
+        if( i->second->_buttonPressed )
+        {
+            i->second->events().notifyMouseDragged( event.pointerMotion.x, event.pointerMotion.y, i->second->_buttonInUse );
+        }
+        else
+        {
+            i->second->events().notifyMouseMoved( event.pointerMotion.x, event.pointerMotion.y );
+        }
+        return true;
+
+    default:
+        return false;
     }
 }
 
 }
 }
+

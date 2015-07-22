@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -87,8 +87,6 @@ public:
     virtual shared_ptr<stardust::Renderer>  createStardustRenderer() = 0;
 
     virtual seq::ViewData* createViewData();
-
-    virtual co::Object* createObject( const uint32_t type );
 
     virtual void update(){};
     virtual bool handleEvent( const eq::Event& event ){ return true; }

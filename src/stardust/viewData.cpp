@@ -2,10 +2,10 @@
 
 #include <application.h>
 
-#include <eq/client/eventICommand.h>
+#include <eq/eventICommand.h>
 #include <eq/fabric/event.h>
 #ifndef EQ_2_0_API
-#   include <eq/client/configEvent.h>
+#   include <eq/configEvent.h>
 #endif
 
 namespace stardust

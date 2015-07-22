@@ -2,8 +2,8 @@
  * Stardust
  * ========
  *
- * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>    
- * 
+ * Copyright (c) 2015-2016, Petros Kataras <petroskataras@gmail.com>
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -96,15 +96,11 @@ seq::Renderer* Application::createRenderer()
 seq::ViewData* Application::createViewData()
 {
     ViewData* viewData = new ViewData;
-    
+
     viewData->setApplication( this );
 
     return static_cast<seq::ViewData*>( viewData );
 }
 
-co::Object* Application::createObject( const uint32_t type )
-{
 }
 
-
-}

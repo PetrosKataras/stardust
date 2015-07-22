@@ -70,19 +70,9 @@ void Renderer::setImplementation( internal::Renderer* internalRenderer )
     _internalRenderer = internalRenderer;
 }
 
-Application& Renderer::getApplication()
-{
-    _internalRenderer->getApplication();
-}
-
-const Application& Renderer::getApplication() const
-{
-    _internalRenderer->getApplication();
-}
-
 int Renderer::getCurrentWindowWidth()
 {
-    _internalRenderer->getCurrentWindowWidth();
+    return _internalRenderer->getCurrentWindowWidth();
 }
 
 int Renderer::getCurrentWindowHeight()
@@ -106,3 +96,4 @@ ofRectangle Renderer::getCurrentPixelViewport()
 }
 
 }
+
