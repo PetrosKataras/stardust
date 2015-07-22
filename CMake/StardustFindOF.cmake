@@ -51,6 +51,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/linux${ARCH_POSTFIX}/libPocoCrypto.a
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/linux${ARCH_POSTFIX}/libPocoUtil.a
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/linux${ARCH_POSTFIX}/libPocoXML.a
+                                ${OF_ROOT_DIRECTORY}/libs/poco/lib/linux${ARCH_POSTFIX}/libPocoJSON.a
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/linux${ARCH_POSTFIX}/libPocoFoundation.a
                                 ${X11_LIBRARIES} 
                                 ${X11_Xcursor_LIB} 
@@ -114,6 +115,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
                                 ${OF_ROOT_DIRECTORY}/libs/tess2/include
                                 ${OF_ROOT_DIRECTORY}/libs/kiss/include
                                 ${OF_ROOT_DIRECTORY}/libs/poco/include
+                                ${OF_ROOT_DIRECTORY}/libs/utf8cpp/include
                                 )
 else()
     message(FATAL_ERROR " Stardust is *not* implemented for : ${CMAKE_SYSTEM_NAME}") 
