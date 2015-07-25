@@ -19,24 +19,24 @@ A prerequisite for working with stardust is reading the Equalizer User & Program
 
 2. Install dependencies (Linux) and compile openFrameworks. 
 
-Linux:  
-`cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux/ubuntu && ./install_dependencies.sh`  
-`cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux && ./compileOF.sh`  
-MacOS X:  
-`cd $STARDUST_ROOT/libs/openFrameworks/libs/openFrameworksCompiled/project && make`
+  Linux:  
+  `cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux/ubuntu && ./install_dependencies.sh`  
+  `cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux && ./compileOF.sh`  
+  MacOS X:  
+  `cd $STARDUST_ROOT/libs/openFrameworks/libs/openFrameworksCompiled/project && make`  
 
 3. Compile and install Equalizer and dependencies :  
 
-Linux:  
-`cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`  
-`cd $STARDUST_ROOT/utils/linux && ./build_EQ.sh`  
-MacOS X:  
-Install [brew](http://brew.sh/) and run on a terminal:  
-`cd $STARDUST_ROOT/utils/osx && ./install_EQ_dependencies.sh`  
-`cd $STARDUST_ROOT/utils/osx && ./build_EQ.sh`  
+  Linux:  
+  `cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`  
+  `cd $STARDUST_ROOT/utils/linux && ./build_EQ.sh`  
+  MacOS X:  
+  Install [brew](http://brew.sh/) and run on a terminal:  
+  `cd $STARDUST_ROOT/utils/osx && ./install_EQ_dependencies.sh`  
+  `cd $STARDUST_ROOT/utils/osx && ./build_EQ.sh`  
 
 4. Compile and optionally install ( run make followed by make install ) stardust:  
-`cd $STARDUST_ROOT && make`
+  `cd $STARDUST_ROOT && make`
 
 The default installation path is under `$STARDUST_ROOT/install`.
 
