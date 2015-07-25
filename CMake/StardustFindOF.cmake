@@ -22,6 +22,7 @@ list(APPEND OF_INCLUDE_DIRS  ${OF_ROOT_DIRECTORY}/libs/openFrameworks
                              ${OF_ROOT_DIRECTORY}/libs/openFrameworks/utils
                              ${OF_ROOT_DIRECTORY}/libs/openFrameworks/video
                              ${OF_ROOT_DIRECTORY}/libs/glfw/include
+                             ${OF_ROOT_DIRECTORY}/libs/fmodex/include
                              ${OF_ROOT_DIRECTORY}/libs/tess2/include
                              ${OF_ROOT_DIRECTORY}/libs/poco/include
                              ${OF_ROOT_DIRECTORY}/libs/utf8cpp/include
@@ -52,6 +53,8 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
     find_package(ALSA REQUIRED)
     find_package(ZLIB REQUIRED)
     find_package(MPG123 REQUIRED)
+
+    set(FMOD_LIB ${OF_ROOT_DIRECTORY}/libs/fmodex/lib/${OF_LIB_PATH}/libfmodex.so )
 
     list(APPEND OF_LIBRARY_DEPENDS    
                                 ${OF_ROOT_DIRECTORY}/libs/glfw/lib/${OF_LIB_PATH}/libglfw3.a
