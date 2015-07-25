@@ -31,7 +31,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
     list(APPEND OF_INCLUDE_DIRS  ${OF_ROOT_DIRECTORY}/libs/kiss/include)
 
     set(OF_LIB_PATH linux${ARCH_POSTFIX})
-    set(APPEND OF_LIB_PATH_SUFFIXES  lib/linux${ARCH_POSTFIX})
+    list(APPEND OF_LIB_PATH_SUFFIXES  lib/linux${ARCH_POSTFIX})
 
     set(ENABLE_X11_TARGET TRUE)
 
@@ -112,7 +112,10 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
                                 )
 elseif(APPLE)
     set(OF_LIB_PATH osx)
-    set(APPEND OF_LIB_PATH_SUFFIXES  lib/osx)
+    list(APPEND OF_LIB_PATH_SUFFIXES  lib/osx)
+
+    set(ENABLE_X11_TARGET TRUE)
+    find_package(X11 REQUIRED)
 
     list(APPEND OF_INCLUDE_DIRS  ${OF_ROOT_DIRECTORY}/libs/freetype/include
                                  ${OF_ROOT_DIRECTORY}/libs/freetype/include/freetype2
@@ -121,7 +124,15 @@ elseif(APPLE)
                                  ${OF_ROOT_DIRECTORY}/libs/cairo/include/cairo
                                  ${OF_ROOT_DIRECTORY}/libs/rtAudio/include
                                  ${OF_ROOT_DIRECTORY}/libs/openssl/include
+                                 ${X11_INCLUDE_DIR} 
+                                 ${X11_Xcursor_INCLUDE_PATH} 
+                                 ${X11_Xxf86vm_INCLUDE_PATH} 
+                                 ${X11_xi_INCLUDE_PATH}
                                  )
+
+
+
+
 
     find_library(ACCELERATE_LIBRARY Accelerate REQUIRED)
     find_library(AGL_LIBRARY AGL REQUIRED)
@@ -154,7 +165,7 @@ elseif(APPLE)
                                 ${OF_ROOT_DIRECTORY}/libs/glfw/lib/${OF_LIB_PATH}/glfw3.a
                                 ${OF_ROOT_DIRECTORY}/libs/freeimage/lib/${OF_LIB_PATH}/freeimage.a
                                 ${OF_ROOT_DIRECTORY}/libs/freetype/lib/${OF_LIB_PATH}/freetype.a
-                                ${OF_ROOT_DIRECTORY}/libs/rtAudion/lib/${OF_LIB_PATH}/rtAudio.a
+                                ${OF_ROOT_DIRECTORY}/libs/rtAudio/lib/${OF_LIB_PATH}/rtAudio.a
                                 ${OF_ROOT_DIRECTORY}/libs/tess2/lib/${OF_LIB_PATH}/tess2.a
                                 ${OF_ROOT_DIRECTORY}/libs/cairo/lib/${OF_LIB_PATH}/cairo-script-interpreter.a
                                 ${OF_ROOT_DIRECTORY}/libs/cairo/lib/${OF_LIB_PATH}/cairo.a
@@ -181,11 +192,17 @@ elseif(APPLE)
                                 ${QUICKTIME_LIBRARY}
                                 ${QTKIT_LIBRARY}
                                 ${GLUT_LIBRARY}
+                                ${X11_LIBRARIES} 
+                                ${X11_Xcursor_LIB} 
+                                ${X11_Xxf86vm_LIB} 
+                                ${X11_Xrandr_LIB} 
+                                ${X11_Xi_LIB}
                                 )
 else()
     message(FATAL_ERROR " Stardust is *not* implemented for : ${CMAKE_SYSTEM_NAME}") 
 endif()
 
+message(STATUS " PATH SUFF " ${OF_LIB_PATH_SUFFIXES} )
 find_library( OF_LIBRARY
               NAMES openFrameworks
               PATHS ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled
