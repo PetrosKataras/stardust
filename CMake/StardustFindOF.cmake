@@ -2,6 +2,7 @@ set(OF_INCLUDE_DIRS)
 set(OF_LIBRARY_DEPENDS)
 set(OF_LIB_PATH)
 set(OF_LIB_PATH_SUFFIXES)
+set(FMOD_LIB)
 
 set(ARCH_POSTFIX)
 if(CMAKE_SIZEOF_VOID_P MATCHES 8)
@@ -131,9 +132,6 @@ elseif(APPLE)
                                  )
 
 
-
-
-
     find_library(ACCELERATE_LIBRARY Accelerate REQUIRED)
     find_library(AGL_LIBRARY AGL REQUIRED)
     find_library(APPKIT_LIBRARY AppKit REQUIRED)
@@ -153,6 +151,8 @@ elseif(APPLE)
     find_library(QTKIT_LIBRARY QTKit REQUIRED)
     find_library(GLUT_LIBRARY GLUT REQUIRED)
 
+    set(FMOD_LIB ${OF_ROOT_DIRECTORY}/libs/fmodex/lib/${OF_LIB_PATH}/libfmodex.dylib )
+
     list(APPEND OF_LIBRARY_DEPENDS    
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/PocoNet.a
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/PocoNetSSL.a
@@ -161,7 +161,6 @@ elseif(APPLE)
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/PocoXML.a
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/PocoJSON.a
                                 ${OF_ROOT_DIRECTORY}/libs/poco/lib/${OF_LIB_PATH}/PocoFoundation.a
-                                ${OF_ROOT_DIRECTORY}/libs/fmodex/lib/${OF_LIB_PATH}/libfmodex.dylib
                                 ${OF_ROOT_DIRECTORY}/libs/glfw/lib/${OF_LIB_PATH}/glfw3.a
                                 ${OF_ROOT_DIRECTORY}/libs/freeimage/lib/${OF_LIB_PATH}/freeimage.a
                                 ${OF_ROOT_DIRECTORY}/libs/freetype/lib/${OF_LIB_PATH}/freetype.a
@@ -174,6 +173,7 @@ elseif(APPLE)
                                 ${OF_ROOT_DIRECTORY}/libs/openssl/lib/${OF_LIB_PATH}/ssl.a
                                 ${OF_ROOT_DIRECTORY}/libs/glut/lib/${OF_LIB_PATH}/GLUT.framework/Versions/A/GLUT
                                 ${OF_ROOT_DIRECTORY}/libs/tess2/lib/${OF_LIB_PATH}/tess2.a
+                                ${FMOD_LIB}
                                 ${ACCELERATE_LIBRARY}
                                 ${AGL_LIBRARY}
                                 ${APPKIT_LIBRARY}

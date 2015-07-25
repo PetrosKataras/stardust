@@ -2,6 +2,7 @@ if( NOT TARGET stardust )
     include(${PROJECT_BINARY_DIR}/stardustTargets.cmake)
 endif()
 
+set(FMOD_LIBRARY ${FMOD_LIB})
 set(STARDUST_INCLUDE_DIRS ${STARDUST_DEPENDS_INCLUDES} )
 set(STARDUST_LIBRARIES stardust)
 set(STARDUST_FOUND TRUE)

@@ -94,6 +94,7 @@ configure_package_config_file( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/StardustConfig
 	INSTALL_DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/cmake"
     PATH_VARS
     STARDUST_DEPENDS_INCLUDES
+    FMOD_LIB
 )
 
 install( EXPORT stardustTargets   
