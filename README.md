@@ -2,11 +2,11 @@
 
 Stardust attempts to bring the benefits and functionality of [openFrameworks](http://openframeworks.cc/) into cluster environments and distributed graphics through the use of [Equalizer](http://www.equalizergraphics.com/). Essentially this means that one can run openFrameworks powered applications in visualization clusters of any size, given sufficient resources ( thanks to and powered by Equalizer ). 
 
-For now stardust is Linux-only ( tested under Xubuntu 14.10 ) but since both openFrameworks and Equalizer are cross platform it should be possible to port in MacOS and Windows.  
+Its currently tested under Linux ( Xubuntu 14.10 ) and MacOS X ( Yosemite 10.10.4 with the GLX backend of Equalizer and not the AGL ). For Mac OS X you can install XQuartz [here](http://xquartz.macosforge.org/landing/). Port to Windows are more than welcome.
 
-Stardust is a work in progress but hopefully in a state where people can try it out and play around with. Any suggestions, feedback, contributions etc. are more than welcome! 
+Stardust is a work in progress but hopefully in a state where people can give it a try. Any suggestions, feedback, contributions etc. are more than welcome! 
 
-The attempt with stardust so far has been to follow as closely as possible the internal models of both openFrameworks and Equalizer and where this has not been possible the changes should be the least invasive. If you notice a bug or see something that you think it could be done in a different / better way please open issue or even better submit a pull request!
+If you notice a bug or see something that you think it could be done in a different / better way please open issue or even better submit a pull request!
 
 A prerequisite for working with stardust is reading the Equalizer User & Programming Guide. You have to fill out a small survey for obtaining the guide [here](http://www.equalizergraphics.com/survey.html). A lot of stuff are not necessarily relevant to stardust at this point but it gives a clear overview of the general philosophy and model of Equalizer, plus details on the distributed objects functionality, setting up visualization clusters for use with eq and various other important aspects.
 
@@ -17,22 +17,32 @@ A prerequisite for working with stardust is reading the Equalizer User & Program
 1. Recursively clone stardust and dependencies :  
 `git clone --recursive git@github.com:PetrosKataras/stardust.git`
 
-2. Install dependencies and compile openFrameworks as per usual.  
+2. Install dependencies (Linux) and compile openFrameworks. 
+
+Linux:  
 `cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux/ubuntu && ./install_dependencies.sh`  
-`cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux && ./compileOF.sh`
+`cd $STARDUST_ROOT/libs/openFrameworks/scripts/linux && ./compileOF.sh`  
+MacOS X:  
+`cd $STARDUST_ROOT/libs/openFrameworks/libs/openFrameworksCompiled/project && make`
 
 3. Compile and install Equalizer and dependencies :  
-`cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`  
-`cd $STARDUST_ROOT/utils/linux && ./build_EQ.sh`
 
-4. Compile and optionally install ( run make followed by make install ) stadust:  
+Linux:  
+`cd $STARDUST_ROOT/utils/linux && ./install_EQ_dependencies.sh`  
+`cd $STARDUST_ROOT/utils/linux && ./build_EQ.sh`  
+MacOS X:  
+Install [brew](http://brew.sh/) and run on a terminal:  
+`cd $STARDUST_ROOT/utils/osx && ./install_EQ_dependencies.sh`  
+`cd $STARDUST_ROOT/utils/osx && ./build_EQ.sh`  
+
+4. Compile and optionally install ( run make followed by make install ) stardust:  
 `cd $STARDUST_ROOT && make`
 
-The default install path for stardust is under `$STARDUST_ROOT/install`.
+The default installation path is under `$STARDUST_ROOT/install`.
 
 After building stardust you should be ready to compile and run the examples. The only requirement is to set `Stardust_DIR` to point to the directory where stardust produced its export configuration files. 
 
-If you have installed stadust with `make install` then `Stardust_DIR` should point to `$INSTALL_PREFIX/share/stardust/cmake` . If you haven't installed stardust you can simply point `Stardust_DIR` to the directory where it was built.
+If you have installed stardust with `make install` then `Stardust_DIR` should point to `$INSTALL_PREFIX/share/stardust/cmake` . If you haven't installed stardust you can simply point `Stardust_DIR` to the directory where it was built.
 
 You can change this and any other project variable with the cmake tool of your choice or by just specifying command line options.
 
