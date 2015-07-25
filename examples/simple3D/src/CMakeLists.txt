@@ -18,7 +18,18 @@ set( src_files application.cpp
 ### =============================================================================================================== 
 ### Compile the executable.
 ### =============================================================================================================== 
-add_executable( simple3DApp ${src_files})
+if( ${CMAKE_SYSTEM_NAME} MATCHES Linux )
+    add_executable( simple3DApp ${src_files})
+elseif(APPLE)
+    add_executable( simple3DApp MACOSX_BUNDLE ${src_files} ${FMOD_LIBRARY})
+
+    set_source_files_properties( ${FMOD_LIBRARY} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS" )
+    add_custom_command( TARGET simple3DApp POST_BUILD COMMAND 
+                                ${CMAKE_INSTALL_NAME_TOOL} -change "./libfmodex.dylib" "@executable_path/libfmodex.dylib" 
+                                $<TARGET_FILE:simple3DApp>) 
+else()
+
+endif()
 
 ### =============================================================================================================== 
 ### Target properties.

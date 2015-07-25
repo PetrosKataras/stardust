@@ -19,7 +19,7 @@ void Renderer::exit()
 void Renderer::draw( co::Object* frameDataObj )
 {
     const FrameData* frameData = static_cast< FrameData* >( frameDataObj );
-    Application& application = static_cast< Application& >( getApplication( ));
+    //Application& application = static_cast< Application& >( getApplication( ));
     applyRenderContext();
     ofEnableDepthTest();
     ofBackground(120, 120, 120);
