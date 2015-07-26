@@ -2,9 +2,9 @@
 
 Stardust attempts to bring the benefits and functionality of [openFrameworks](http://openframeworks.cc/) into cluster environments and distributed graphics through the use of [Equalizer](http://www.equalizergraphics.com/). Essentially this means that one can run openFrameworks powered applications in visualization clusters of any size, given sufficient resources ( thanks to and powered by Equalizer ). 
 
-Its currently tested under Linux ( Xubuntu 14.10 ) and MacOS X ( Yosemite 10.10.4 with the GLX backend of Equalizer and not the AGL ). For Mac OS X you can install XQuartz [here](http://xquartz.macosforge.org/landing/). Port to Windows are more than welcome.
+Its currently tested under Linux ( Xubuntu 14.10 ) and MacOS X ( Yosemite 10.10.4 with the GLX backend of Equalizer and not the AGL ). For Mac OS X you can install XQuartz [here](http://xquartz.macosforge.org/landing/). Port to Windows is more than welcome.
 
-Stardust is a work in progress but hopefully in a state where people can give it a try. Any suggestions, feedback, contributions etc. are more than welcome! 
+Stardust is work-in-progress but hopefully in a state where people can give it a try. Any suggestions, feedback, contributions etc. are more than welcome! 
 
 If you notice a bug or see something that you think it could be done in a different / better way please open issue or even better submit a pull request!
 
