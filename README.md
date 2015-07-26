@@ -35,12 +35,15 @@ A prerequisite for working with stardust is reading the Equalizer User & Program
   `cd $STARDUST_ROOT/utils/osx && ./install_EQ_dependencies.sh`  
   `cd $STARDUST_ROOT/utils/osx && ./build_EQ.sh`  
 
-4. Compile and optionally install ( run make followed by make install ) stardust:  
+4. Compile stardust and optionally install ( run make followed by make install ) stardust:  
   `cd $STARDUST_ROOT && make`
 
-The default installation path is under `$STARDUST_ROOT/install`.
+This command will build a release vesion of stardust and the included examples ( run `make Debug` for a debug version ).  
+To run the examples `cd release/examples` or `cd debug/examples` depending on your target and you can take it from there.  
 
-After building stardust you should be ready to compile and run the examples. The only requirement is to set `Stardust_DIR` to point to the directory where stardust produced its export configuration files. 
+The default installation path is under `$STARDUST_ROOT/install`.  
+
+If you want to use a custom directory for an application using stardust the only requirement is to set `Stardust_DIR` to point to the directory where stardust produced its export configuration files. 
 
 If you have installed stardust with `make install` then `Stardust_DIR` should point to `$INSTALL_PREFIX/share/stardust/cmake` . If you haven't installed stardust you can simply point `Stardust_DIR` to the directory where it was built.
 
