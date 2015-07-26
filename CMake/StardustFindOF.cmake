@@ -207,17 +207,17 @@ endif()
 
 message(STATUS " PATH SUFF " ${OF_LIB_PATH_SUFFIXES} )
 find_library( OF_LIBRARY
-              NAMES openFrameworks
+              NAMES openFrameworks openFrameworks.a
               PATHS ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled
               PATH_SUFFIXES ${OF_LIB_PATH_SUFFIXES}
             )
 
 find_library( OF_LIBRARY_D
-              NAMES openFrameworksDebug
+              NAMES openFrameworksDebug openFrameworksDebug.a
               PATHS ${OF_ROOT_DIRECTORY}/libs/openFrameworksCompiled
               PATH_SUFFIXES ${OF_LIB_PATH_SUFFIXES}
             )
-
+        message(STATUS ${OF_LIBRARY})
 if( NOT OF_LIBRARY AND NOT OF_LIBRARY_D )
     message( FATAL_ERROR "***______ Neither Release or Debug build of openFrameworks was found _____ !! Did you forgot to compile OF ?") 
 endif()
