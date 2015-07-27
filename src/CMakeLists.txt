@@ -15,8 +15,8 @@ add_library( stardust STATIC ${PROJECT_SOURCE_DIR}/src/stardust/application.cpp
 ### =============================================================================================================== 
 ### Include Directories.                              
 ### =============================================================================================================== 
-target_include_directories( stardust PRIVATE ${OF_INCLUDE_DIRS} ${EQUALIZER_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/include/stardust ${PROJECT_SOURCE_DIR}/include/stardust/internal)
-target_include_directories( stardust PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> )
+target_include_directories( stardust PUBLIC "$<BUILD_INTERFACE:${OF_INCLUDE_DIRS};${EQUALIZER_INCLUDE_DIRS};${PROJECT_SOURCE_DIR}/include/stardust;${PROJECT_SOURCE_DIR}/include/stardust/internal;${PROJECT_SOURCE_DIR}/include>"
+    )
 
 ### =============================================================================================================== 
 ### Stardust Properties.                                                                                        
@@ -39,8 +39,8 @@ target_link_libraries( stardust INTERFACE debug "${OF_LIBRARY_D}" "${OF_LIBRARY_
 ### =============================================================================================================== 
 install( TARGETS stardust 
          EXPORT stardustTargets
-         ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}"
-         INCLUDES DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
+         ARCHIVE DESTINATION "lib/${PROJECT_NAME}"
+         INCLUDES DESTINATION "include"
 )
 
 ### =============================================================================================================== 

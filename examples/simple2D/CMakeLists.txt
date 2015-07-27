@@ -19,7 +19,7 @@ option(CMAKE_VERBOSE_MAKEFILE "Toggle verbose makefile" ON)
 ### =============================================================================================================== 
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake" )
 
-include(FindStardust)
+#include(FindStardust)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
