@@ -12,7 +12,12 @@ if [ -n "$1" ];then
         BUILD_TYPE=Debug;
     elif [ "$1" = "clobber" ];then
         echo "Clobber - Cleaning Equalizer and dependencies......................................." 
-        cd $EQ_ROOT_DIR && rm -rf Build;
+        cd $EQ_ROOT_DIR && rm -rf Build \
+                           rm -rf Pression \
+                           rm -rf vmmlib \
+                           rm -rf Servus \
+                           rm -rf Collage \
+                           rm -rf Lunchbox;
         cd $EQ_ROOT_DIR && rm -rf install;
         exit 0;
     else
