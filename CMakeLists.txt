@@ -64,8 +64,13 @@ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake" 
 ### StardustFindEQ tries to locate EQ config cmake files in order to pull EQ and its dependencies ( Lunchbox, Collage etc. )
 ### Check the individual files for more info on what is happening exactly...
 ### =============================================================================================================== 
-include(StardustFindOF)
-include(StardustFindEQ)
+include( StardustFindOF )
+include( StardustFindEQ )
+
+### =============================================================================================================== 
+### Initialize fmodex variable with what was found from OF. For OS X this is going to be copied to the application bundle.
+### =============================================================================================================== 
+set( FMOD_LIBRARY ${FMOD_LIB} )
 
 ### =============================================================================================================== 
 ### Location of stardust in the build tree.
@@ -78,7 +83,7 @@ set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib" )
 set(STARDUST_DEPENDS_INCLUDES ${EQUALIZER_INCLUDE_DIRS} ${OF_INCLUDE_DIRS})
 
 ### =============================================================================================================== 
-### Adds stardust as a target.
+### Adds stardust as a target and build examples.
 ### =============================================================================================================== 
 add_subdirectory( src )
 add_subdirectory( examples/simple2D )
@@ -90,7 +95,7 @@ add_subdirectory( examples/simple3D )
 ### You can include the generated file directly from the install directory; 
 ### Defines STARDUST_FOUND, STARDUST_LIBRARIES, STARDUST_INCLUDE_DIRS .
 ### =============================================================================================================== 
-include(CMakePackageConfigHelpers)
+include( CMakePackageConfigHelpers )
 configure_package_config_file( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/StardustConfig.cmake.in"
                                "${CMAKE_CURRENT_BINARY_DIR}/share/StardustConfig.cmake"
 	INSTALL_DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/cmake"
