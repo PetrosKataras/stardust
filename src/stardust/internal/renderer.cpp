@@ -210,7 +210,7 @@ bool Renderer::processEvent( const eq::Event& event )
 
     switch(event.type)
     {
-    case eq::Event::WINDOW_POINTER_BUTTON_PRESS:
+    case eq::Event::CHANNEL_POINTER_BUTTON_PRESS:
     {
         ofGetMainLoop()->setCurrentWindow(i->second);
         const eq::PointerEvent& pressEvent = event.pointerButtonPress;
@@ -238,7 +238,7 @@ bool Renderer::processEvent( const eq::Event& event )
         i->second->events().notifyMousePressed( pressEvent.x, pressEvent.y, button );
         return true;
     }
-    case eq::Event::WINDOW_POINTER_BUTTON_RELEASE:
+    case eq::Event::CHANNEL_POINTER_BUTTON_RELEASE:
     {
         ofGetMainLoop()->setCurrentWindow(i->second);
         const eq::PointerEvent& releaseEvent = event.pointerButtonRelease;
@@ -266,7 +266,8 @@ bool Renderer::processEvent( const eq::Event& event )
         i->second->events().notifyMouseReleased( releaseEvent.x, releaseEvent.y, button );
         return true;
     }
-    case eq::Event::WINDOW_POINTER_MOTION:
+    case eq::Event::CHANNEL_POINTER_MOTION:
+    {
         ofGetMainLoop()->setCurrentWindow(i->second);
         if( i->second->_buttonPressed )
         {
@@ -277,6 +278,7 @@ bool Renderer::processEvent( const eq::Event& event )
             i->second->events().notifyMouseMoved( event.pointerMotion.x, event.pointerMotion.y );
         }
         return true;
+    }
 
     default:
         return false;
