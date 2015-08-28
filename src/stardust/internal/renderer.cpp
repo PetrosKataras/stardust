@@ -175,7 +175,7 @@ bool Renderer::initContext( co::Object* object )
 
     const uint32_t windowID = getWindowID();
     _windows[ windowID ] = shared_ptr<internal::Window>( new internal::Window );
-    _windows[ windowID ]->initialiaze();
+    _windows[ windowID ]->initialiaze( getCurrentPixelViewport() );
 
     ofGetMainLoop()->addWindow( _windows[ windowID ] );
     ///> TODO: Loop through windows.

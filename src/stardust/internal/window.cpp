@@ -73,6 +73,8 @@ namespace internal
 
 Window::Window()
     : _buttonPressed(false)
+    , _width(0)
+    , _height(0)
 {
 }
 
@@ -80,11 +82,37 @@ Window::~Window()
 {
 }
 
-void Window::initialiaze()
+void Window::initialiaze( ofRectangle viewport )
 {
-    currentRenderer = shared_ptr<ofBaseRenderer>( new ofGLRenderer(this) );
-    static_cast<ofGLRenderer*>(currentRenderer.get())->setup();
-    static_cast<ofGLRenderer*>(currentRenderer.get())->setOrientation( OF_ORIENTATION_DEFAULT, false );
+    _width = viewport.width;
+    _height = viewport.height;
+    _windowPos = ofPoint( viewport.x, viewport.y );
+    _windowSize = ofPoint( _width, _height );
+
+    _renderer = shared_ptr<ofBaseRenderer>( new ofGLRenderer(this) );
+
+    static_cast<ofGLRenderer*>(_renderer.get())->setup();
+    static_cast<ofGLRenderer*>(_renderer.get())->setOrientation( OF_ORIENTATION_DEFAULT, false );
+}
+
+ofPoint Window::getWindowPosition()
+{
+    return _windowPos;
+}
+
+ofPoint Window::getWindowSize()
+{
+    return _windowSize;
+}
+
+int Window::getWidth()
+{
+    return _width;
+}
+
+int Window::getHeight()
+{
+    return _height;
 }
 
 }

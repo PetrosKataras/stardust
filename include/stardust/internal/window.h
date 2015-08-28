@@ -86,24 +86,22 @@ namespace stardust
             static void pollEvents(){ }
 
 
-            void initialiaze();
+            void initialiaze( ofRectangle viewport );
 
             virtual void setup(const ofGLWindowSettings & settings){};
             virtual void update(){}
             virtual void draw(){}
 
-            virtual shared_ptr<ofBaseRenderer> & renderer(){ return currentRenderer; }
+            virtual shared_ptr<ofBaseRenderer> & renderer(){ return _renderer; }
 
-            virtual ofPoint getWindowPosition(){};
-            virtual ofPoint getWindowSize(){};
+            virtual ofPoint getWindowPosition();
+            virtual ofPoint getWindowSize();
 
-            ofRectangle getPixelViewport();
-
-            virtual int getWidth(){};
-            virtual int getHeight(){};
+            virtual int getWidth();
+            virtual int getHeight();
 
             virtual void * getWindowContext(){return NULL;};
-            virtual ofCoreEvents & events(){ return coreEvents; }
+            virtual ofCoreEvents & events(){ return _coreEvents; }
 
             bool _buttonPressed;
             int _buttonInUse;
@@ -112,14 +110,15 @@ namespace stardust
 
 
         private:
-            shared_ptr<ofBaseRenderer>  currentRenderer;
-            ofCoreEvents coreEvents;
+            shared_ptr<ofBaseRenderer>  _renderer;
 
-            ofPoint windowPos;
-            ofPoint windowSize;
+            ofCoreEvents _coreEvents;
 
-            int width;
-            int height;
+            ofPoint _windowPos;
+            ofPoint _windowSize;
+
+            int _width;
+            int _height;
         };
     }
 }
