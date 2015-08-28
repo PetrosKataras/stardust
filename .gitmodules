@@ -3,4 +3,4 @@
 	url = git@github.com:PetrosKataras/openFrameworks.git
 [submodule "libs/equalizer"]
 	path = libs/equalizer
-	url = git@github.com:Eyescale/Equalizer.git
+	url = git@github.com:PetrosKataras/Equalizer.git
