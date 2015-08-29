@@ -178,7 +178,6 @@ bool Renderer::initContext( co::Object* object )
                                             , getWindowPixelViewport().w
                                             , getWindowPixelViewport().h );
 
-    LBERROR << " PVP : " << windowPixelViewport <<std::endl;
     const uint32_t windowID = getWindowID();
     _windows[ windowID ] = shared_ptr<internal::Window>( new internal::Window );
     _windows[ windowID ]->initialiaze( windowPixelViewport );
