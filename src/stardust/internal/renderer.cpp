@@ -173,9 +173,15 @@ bool Renderer::initContext( co::Object* object )
     if( !seq::Renderer::initContext( object ))
         return false;
 
+    const ofRectangle windowPixelViewport( getWindowPixelViewport().x
+                                            , getWindowPixelViewport().y
+                                            , getWindowPixelViewport().w
+                                            , getWindowPixelViewport().h );
+
+    LBERROR << " PVP : " << windowPixelViewport <<std::endl;
     const uint32_t windowID = getWindowID();
     _windows[ windowID ] = shared_ptr<internal::Window>( new internal::Window );
-    _windows[ windowID ]->initialiaze( getCurrentPixelViewport() );
+    _windows[ windowID ]->initialiaze( windowPixelViewport );
 
     ofGetMainLoop()->addWindow( _windows[ windowID ] );
     ///> TODO: Loop through windows.
